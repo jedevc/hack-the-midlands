@@ -1,1 +1,1 @@
-# Hack the midlands project
+# KittenKollector
