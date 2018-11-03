@@ -21,3 +21,5 @@ def view_kitten():
         image = '/api/images/' + code
 
         return flask.render_template('kitten.html', code=code, name=name, image=image)
+    else:
+        return '', 404

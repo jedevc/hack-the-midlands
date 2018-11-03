@@ -38,4 +38,4 @@ def get_image(code):
     if result:
         return flask.send_file(result)
     else:
-        return ('', 404)
+        return '', 404
