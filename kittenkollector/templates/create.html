@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Hello world</title>
+  </head>
+  <body>
+    <input id="kitten-name" type="text" name="name">
+    <input type="submit" value="Make new kitten!" onclick="makeKitten()">
+
+    <script>
+    function makeKitten() {
+      fetch("/api/codes", {
+        method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+          name: document.getElementById('kitten-name').value
+        })
+      }).then((response) => { 
+        response.json().then((json) => {
+          window.location = '/kitten?code=' + json.code
+        })
+      })
+    }
+    </script>
+  </body>
+</html>

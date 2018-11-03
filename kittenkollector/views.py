@@ -7,6 +7,37 @@ import os
 def root():
     return flask.render_template('index.html')
 
+@app.route('/create')
+def create_kitten():
+    return flask.render_template('create.html')
+
+@app.route('/kitten')
+def view_kitten():
+    code = flask.request.args.get('code')
+
+    db = get_db()
+    result = db.get(code)
+    if result:
+        name = result
+        image = '/api/images/' + code
+
+        return flask.render_template('kitten.html', code=code, name=name, image=image)
+
+@app.route('/api/codes', methods = ['POST'])
+def create_code():
+    params = flask.request.get_json()
+    db = get_db()
+
+    name = params['name']
+    code = db.create(name)
+    image = '/api/images/' + code
+
+    return flask.jsonify({
+        'code': code,
+        'name': name,
+        'image': image
+    })
+
 @app.route('/api/codes/<string:code>')
 def get_code(code):
     db = get_db()
@@ -14,6 +45,7 @@ def get_code(code):
     if result:
         name = result
         return flask.jsonify({
+            'code': code,
             'name': name,
             'image': '/api/images/' + code
         })
