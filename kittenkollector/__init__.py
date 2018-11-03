@@ -5,7 +5,7 @@ from .database import Database
 
 app = Flask(__name__)
 
-DATABASE = 'kittens.db'
+DATABASE = '/tmp/kittens.db'
 
 def get_db():
     db = getattr(flask.g, '_database', None)
@@ -19,4 +19,5 @@ def close_db(exception):
     if db:
         db.close()
 
+import kittenkollector.api
 import kittenkollector.views
