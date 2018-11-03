@@ -5,7 +5,7 @@ import os
 
 @app.route('/')
 def root():
-    return flask.send_file('static/index.html')
+    return flask.render_template('index.html')
 
 @app.route('/api/codes/<string:code>')
 def get_code(code):
