@@ -1,1 +1,2 @@
 flask
+git+https://github.com/jedevc/Robohash.git
