@@ -1,11 +1,9 @@
-import flask
-from flask import Flask
+from . import app
 
+import flask
 import os
 
 from robohash import Robohash
-
-app = Flask(__name__)
 
 @app.route('/')
 def root():
@@ -32,8 +30,12 @@ def get_code(code):
     else:
         return flask.jsonify({}), 404
 
+IMAGE_DIR='/tmp/kittenkollector/images/' 
+if not os.path.exists(IMAGE_DIR):
+    os.makedirs(IMAGE_DIR)
+
 def find_image(code):
-    path = 'images/' + code + '.png'
+    path = '/tmp/kittenkollector/images/' + code + '.png'
     if not os.path.isfile(path):
         rh = Robohash(code)
         rh.assemble(roboset='set4')
@@ -46,8 +48,4 @@ def get_image(code):
     if code in codes:
         return flask.send_file(find_image(code))
     else:
-        return flask.send_file(find_image(code))
         return ('', 404)
-
-if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
