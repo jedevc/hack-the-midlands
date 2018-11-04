@@ -76,10 +76,12 @@
           }
         }).then((response) => {
           if (response.status != 404) {
-            createKitten(kode)
+            if (kodes.indexOf(kode) == -1) {  // not in list already
+              kodes.push(kode);
+              localStorage.setItem("kodes", JSON.stringify(kodes))
 
-            kodes.push(kode);
-            localStorage.setItem("kodes", JSON.stringify(kodes))
+              createKitten(kode)
+            }
           }
         })
       }
