@@ -3,7 +3,11 @@ import os
 
 import random
 
+import string
+
 IMAGE_DIR='/tmp/kittenkollector/images/' 
+NUMERALS = string.digits + string.ascii_lowercase
+KODE_LENGTH = 6
 
 from robohash import Robohash
 
@@ -19,7 +23,7 @@ class Database:
             os.makedirs(imgdir)
 
     def create(self, name, location):
-        kid = random.randint(0, 16 ** 8)
+        kid = random.randint(0, len(NUMERALS) ** KODE_LENGTH)
 
         self.cursor.execute('INSERT INTO kittens(id, name, location) VALUES (?, ?, ?)', (kid, name, location))
         self.conn.commit()
@@ -49,13 +53,6 @@ class Database:
     def close(self):
         self.conn.close()
 
-    def _kode_to_id(kode):
-        kode = kode[:8]
-        return int(kode, 16)
-
-    def _id_to_kode(kode):
-        return "{0:08X}".format(kode)
-
     def _find_image(self, kode):
         path = os.path.join(self.imgdir, kode + '.png')
 
@@ -65,3 +62,15 @@ class Database:
             rh.img.save(path, 'png')
 
         return path
+
+    def _kode_to_id(kode):
+        return int(kode, len(NUMERALS))
+
+    def _id_to_kode(kid):
+        digits = []
+        while kid != 0:
+            rem = kid % len(NUMERALS)
+            kid = kid // len(NUMERALS)
+            digits.append(NUMERALS[rem])
+
+        return ''.join(reversed(digits))
