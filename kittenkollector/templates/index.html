@@ -50,7 +50,7 @@
               link.appendChild(card)
 
               var element = document.getElementById("kittenlist")
-              element.appendChild(link)
+              element.prepend(link)
             })
           }
         })
@@ -59,9 +59,7 @@
       function init() {
         var raw = localStorage.getItem("kodes")
         if (raw) {
-          kodes = JSON.parse(raw)
-
-          var element = document.getElementById("kittenlist")
+          kodes = raw.split(';')
           for (var i = 0; i < kodes.length; i++) {
             createKitten(kodes[i])
           }
@@ -83,7 +81,7 @@
           if (response.status != 404) {
             if (kodes.indexOf(kode) == -1) {  // not in list already
               kodes.push(kode)
-              localStorage.setItem("kodes", JSON.stringify(kodes))
+              localStorage.setItem("kodes", kodes.join(";"))
 
               createKitten(kode)
             }
@@ -96,7 +94,6 @@
         localStorage.setItem("kodes", '[]')
         document.getElementById("kittenlist").innerHTML = ''
       }
-
     </script>
 
     <div class="container">
