@@ -24,3 +24,7 @@ def view_kitten():
                 location=location, image=image)
     else:
         return '', 404
+
+@app.route('/favicon.ico')
+def favicon():
+    return flask.send_file('favicon.ico')
