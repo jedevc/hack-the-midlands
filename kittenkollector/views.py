@@ -17,9 +17,10 @@ def view_kitten():
     db = get_db()
     result = db.get(code)
     if result:
-        name = result
+        name, location = result
         image = '/api/images/' + code
 
-        return flask.render_template('kitten.html', code=code, name=name, image=image)
+        return flask.render_template('kitten.html', code=code, name=name,
+                location=location, image=image)
     else:
         return '', 404

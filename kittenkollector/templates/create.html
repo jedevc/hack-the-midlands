@@ -2,10 +2,30 @@
 <html>
   <head>
     <title>Hello world</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
-    <input id="kitten-name" type="text" name="name">
-    <input type="submit" value="Make new kitten!" onclick="makeKitten()">
+    <div class="container">
+      <h1>Kitten creator</h1>
+      <p>Enter your kitten's details:</p>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Name</span>
+        </div>
+        <input id="kitten-name" type="text" class="form-control" placeholder="Octokitten" aria-label="Name" aria-describedby="basic-addon1">
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Location</span>
+        </div>
+        <input id="kitten-location" type="text" class="form-control" placeholder="Hack the Midlands" aria-label="Location" aria-describedby="basic-addon1">
+      </div>
+
+      <p>You're ready to go!</p>
+      <input type="submit" value="Make new kitten!" class="btn btn-outline-primary" onclick="makeKitten()">
+    </div>
 
     <script>
     function makeKitten() {
@@ -17,7 +37,8 @@
         },
 
         body: JSON.stringify({
-          name: document.getElementById('kitten-name').value
+          name: document.getElementById('kitten-name').value,
+          location: document.getElementById('kitten-location').value
         })
       }).then((response) => { 
         response.json().then((json) => {

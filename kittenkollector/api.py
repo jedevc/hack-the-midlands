@@ -8,7 +8,9 @@ def create_code():
     db = get_db()
 
     name = params['name']
-    code = db.create(name)
+    location = params['location']
+
+    code = db.create(name, location)
     image = '/api/images/' + code
 
     return flask.jsonify({
@@ -22,10 +24,11 @@ def get_code(code):
     db = get_db()
     result = db.get(code)
     if result:
-        name = result
+        name, location = result
         return flask.jsonify({
             'code': code,
             'name': name,
+            'location': location,
             'image': '/api/images/' + code
         })
     else:

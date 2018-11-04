@@ -12,16 +12,16 @@ class Database:
         self.conn = sqlite3.connect(dbfile)
         self.cursor = self.conn.cursor()
 
-        self.cursor.execute('CREATE TABLE IF NOT EXISTS kittens (id INTEGER PRIMARY KEY, name TEXT)')
+        self.cursor.execute('CREATE TABLE IF NOT EXISTS kittens (id INTEGER PRIMARY KEY, name TEXT, location TEXT)')
 
         self.imgdir = imgdir
         if not os.path.exists(imgdir):
             os.makedirs(imgdir)
 
-    def create(self, name):
+    def create(self, name, location):
         kid = random.randint(0, 16 ** 8)
 
-        self.cursor.execute('INSERT INTO kittens(id, name) VALUES (?, ?)', (kid, name))
+        self.cursor.execute('INSERT INTO kittens(id, name, location) VALUES (?, ?, ?)', (kid, name, location))
         self.conn.commit()
 
         code = Database._id_to_code(kid)
@@ -30,13 +30,13 @@ class Database:
     def get(self, code):
         kid = Database._code_to_id(code)
 
-        self.cursor.execute('SELECT name FROM kittens WHERE id=?', (kid,))
+        self.cursor.execute('SELECT name, location FROM kittens WHERE id=?', (kid,))
         result = self.cursor.fetchone()
         if not result:
             return None
 
-        (name,) = result
-        return name
+        name, location = result
+        return name, location
 
     def getimage(self, code):
         kid = Database._code_to_id(code)
