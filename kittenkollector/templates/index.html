@@ -1,9 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
   <head>
-    <title>Hello world</title>
+    <title>KittenKollector</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
-  <body>
-    <h1>Hello world!</h1>
+  <body onload="init()">
+    <script>
+      var kodes;
+
+      function createKitten(kode) {
+        const url = "/api/codes/" + kode
+        fetch("/api/codes/" + kode, {
+          headers: {
+            "Accept": "application/json"
+          }
+        }).then((response) => { 
+          if (response.status != 404) {
+            response.json().then((kitten) => {
+              var card = document.createElement("div")
+              card.setAttribute("style", "width: 18rem; display: inline-block; margin: 10px;")
+              card.setAttribute("class", "card")
+
+              var cardTop = document.createElement("img")
+              cardTop.setAttribute("src", "/api/images/" + kode)
+              cardTop.setAttribute("class", "card-img-top")
+              card.appendChild(cardTop)
+
+              var cardBody = document.createElement("div")
+              cardBody.setAttribute("class", "card-body")
+
+              var cardTitle = document.createElement("h5")
+              cardTitle.setAttribute("class", "card-title")
+              cardTitle.innerHTML = kitten.name
+              cardBody.appendChild(cardTitle)
+
+              var cardText = document.createElement("p")
+              cardText.setAttribute("class", "card-text")
+              cardText.innerHTML = kitten.location
+              cardBody.appendChild(cardText)
+
+              card.appendChild(cardBody)
+
+              var element = document.getElementById("kittenlist");
+              element.appendChild(card)
+            })
+          }
+        })
+      }
+
+      function init() {
+        var raw = localStorage.getItem("kodes")
+        if (raw) {
+          kodes = JSON.parse(raw);
+
+          var element = document.getElementById("kittenlist");
+          for (var i = 0; i < kodes.length; i++) {
+            createKitten(kodes[i])
+          }
+        } else {
+          kodes = []
+        }
+      }
+
+      function addKode() {
+        var kode = document.getElementById("KittenKode").value;
+        const url = "/api/codes/" + kode
+
+        fetch("/api/codes/" + kode, {
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        }).then((response) => { 
+          if (response.status != 404) {
+            createKitten(kode)
+
+            kodes.push(kode);
+            localStorage.setItem("kodes", JSON.stringify(kodes))
+          }
+        })
+      }
+    </script>
+
+    <div class="container">
+      <h1>KITTEN KOLLECTOR</h1>
+      Catch Kittens by entering their code!!!
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Kitten Kode</span>
+        </div>
+        <input id="KittenKode" type="text" class="form-control" aria-label="Kitten Kode" aria-describedby="basic-addon1">
+      </div>
+      <input type="submit" value="Add kitten" class="btn btn-outline-primary" onclick="addKode()">
+    </div>
+
+    <div id="kittenlist" class="container">                
+    </div>
   </body>
 </html>
