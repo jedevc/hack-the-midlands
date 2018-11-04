@@ -19,7 +19,7 @@ conceivably host it anywhere.
 
 ## Team
 
-The team was [Joseph Snell](https://github.com/JDSSDJ1), Katie Midgely, and
+The team was [Joseph Snell](https://github.com/JDSSDJ1), Katie Midgley, and
 [Justin Chadwell](https://github.com/jedevc).
 
 ## Installation
