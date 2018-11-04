@@ -33,6 +33,8 @@ class Database:
 
     def get(self, kode):
         kid = Database._kode_to_id(kode)
+        if kid is None:
+            return None
 
         self.cursor.execute('SELECT name, location FROM kittens WHERE id=?', (kid,))
         result = self.cursor.fetchone()
@@ -44,6 +46,8 @@ class Database:
 
     def getimage(self, kode):
         kid = Database._kode_to_id(kode)
+        if kid is None:
+            return None
 
         self.cursor.execute('SELECT * FROM kittens WHERE id=?', (kid,))
         result = self.cursor.fetchone()
@@ -64,7 +68,10 @@ class Database:
         return path
 
     def _kode_to_id(kode):
-        return int(kode, len(NUMERALS))
+        try:
+            return int(kode, len(NUMERALS))
+        except ValueError:
+            return None
 
     def _id_to_kode(kid):
         digits = []
