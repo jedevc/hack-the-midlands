@@ -17,6 +17,11 @@ with bootstrap on the frontend. The icons are generated using
 The app was made to be deployed to Google App Platform, but you could
 conceivably host it anywhere.
 
+## Team
+
+The team was [Joseph Snell](https://github.com/JDSSDJ1), Katie Midgely, and
+[Justin Chadwell](https://github.com/jedevc).
+
 ## Installation
 
 If for some reason you decide you actually want to run kitten kollector (not
