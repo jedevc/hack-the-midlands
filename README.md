@@ -30,3 +30,7 @@ commands to download kitten kollector and install all of its dependencies.
 Then running the app is just as easy as:
 
 	$ python main.py
+
+## License
+
+All code is licensed under the MIT license.
