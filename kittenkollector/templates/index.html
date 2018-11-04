@@ -9,7 +9,7 @@
   </head>
   <body onload="init()">
     <script>
-      var kodes;
+      var kodes
 
       function createKitten(kode) {
         const url = "/api/codes/" + kode
@@ -44,7 +44,7 @@
 
               card.appendChild(cardBody)
 
-              var element = document.getElementById("kittenlist");
+              var element = document.getElementById("kittenlist")
               element.appendChild(card)
             })
           }
@@ -54,9 +54,9 @@
       function init() {
         var raw = localStorage.getItem("kodes")
         if (raw) {
-          kodes = JSON.parse(raw);
+          kodes = JSON.parse(raw)
 
-          var element = document.getElementById("kittenlist");
+          var element = document.getElementById("kittenlist")
           for (var i = 0; i < kodes.length; i++) {
             createKitten(kodes[i])
           }
@@ -66,7 +66,7 @@
       }
 
       function addKode() {
-        var kode = document.getElementById("KittenKode").value;
+        var kode = document.getElementById("KittenKode").value
         const url = "/api/codes/" + kode
 
         fetch("/api/codes/" + kode, {
@@ -77,7 +77,7 @@
         }).then((response) => {
           if (response.status != 404) {
             if (kodes.indexOf(kode) == -1) {  // not in list already
-              kodes.push(kode);
+              kodes.push(kode)
               localStorage.setItem("kodes", JSON.stringify(kodes))
 
               createKitten(kode)
