@@ -20,6 +20,9 @@
         }).then((response) => {
           if (response.status != 404) {
             response.json().then((kitten) => {
+              var link = document.createElement('a')
+              link.setAttribute('href', '/kitten?kode=' + kode)
+
               var card = document.createElement("div")
               card.setAttribute("style", "width: 18rem; display: inline-block; margin: 10px;")
               card.setAttribute("class", "card")
@@ -44,8 +47,10 @@
 
               card.appendChild(cardBody)
 
+              link.appendChild(card)
+
               var element = document.getElementById("kittenlist")
-              element.appendChild(card)
+              element.appendChild(link)
             })
           }
         })
