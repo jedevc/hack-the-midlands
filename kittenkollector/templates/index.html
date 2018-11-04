@@ -85,6 +85,13 @@
           }
         })
       }
+
+      function removeKodes() {
+        kodes = []
+        localStorage.setItem("kodes", '[]')
+        document.getElementById("kittenlist").innerHTML = ''
+      }
+
     </script>
 
     <div class="container">
@@ -101,6 +108,10 @@
     </div>
 
     <div id="kittenlist" class="container">
+    </div>
+
+    <div class="container">
+      <input type="submit" value="Remove all kittens" class="btn btn-outline-primary" onclick="removeKodes()">
     </div>
   </body>
 </html>
