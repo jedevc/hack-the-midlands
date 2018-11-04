@@ -12,15 +12,15 @@ def create_kitten():
 
 @app.route('/kitten')
 def view_kitten():
-    code = flask.request.args.get('code')
+    kode = flask.request.args.get('kode')
 
     db = get_db()
-    result = db.get(code)
+    result = db.get(kode)
     if result:
         name, location = result
-        image = '/api/images/' + code
+        image = '/api/images/' + kode
 
-        return flask.render_template('kitten.html', code=code, name=name,
+        return flask.render_template('kitten.html', kode=kode, name=name,
                 location=location, image=image)
     else:
         return '', 404

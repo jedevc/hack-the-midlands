@@ -12,8 +12,8 @@
       var kodes
 
       function createKitten(kode) {
-        const url = "/api/codes/" + kode
-        fetch("/api/codes/" + kode, {
+        const url = "/api/kodes/" + kode
+        fetch("/api/kodes/" + kode, {
           headers: {
             "Accept": "application/json"
           }
@@ -67,9 +67,9 @@
 
       function addKode() {
         var kode = document.getElementById("KittenKode").value
-        const url = "/api/codes/" + kode
+        const url = "/api/kodes/" + kode
 
-        fetch("/api/codes/" + kode, {
+        fetch("/api/kodes/" + kode, {
           headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"

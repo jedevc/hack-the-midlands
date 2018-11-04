@@ -24,11 +24,11 @@ class Database:
         self.cursor.execute('INSERT INTO kittens(id, name, location) VALUES (?, ?, ?)', (kid, name, location))
         self.conn.commit()
 
-        code = Database._id_to_code(kid)
-        return code
+        kode = Database._id_to_kode(kid)
+        return kode
 
-    def get(self, code):
-        kid = Database._code_to_id(code)
+    def get(self, kode):
+        kid = Database._kode_to_id(kode)
 
         self.cursor.execute('SELECT name, location FROM kittens WHERE id=?', (kid,))
         result = self.cursor.fetchone()
@@ -38,29 +38,29 @@ class Database:
         name, location = result
         return name, location
 
-    def getimage(self, code):
-        kid = Database._code_to_id(code)
+    def getimage(self, kode):
+        kid = Database._kode_to_id(kode)
 
         self.cursor.execute('SELECT * FROM kittens WHERE id=?', (kid,))
         result = self.cursor.fetchone()
         if result:
-            return self._find_image(code)
+            return self._find_image(kode)
 
     def close(self):
         self.conn.close()
 
-    def _code_to_id(code):
-        code = code[:8]
-        return int(code, 16)
+    def _kode_to_id(kode):
+        kode = kode[:8]
+        return int(kode, 16)
 
-    def _id_to_code(code):
-        return "{0:08X}".format(code)
+    def _id_to_kode(kode):
+        return "{0:08X}".format(kode)
 
-    def _find_image(self, code):
-        path = os.path.join(self.imgdir, code + '.png')
+    def _find_image(self, kode):
+        path = os.path.join(self.imgdir, kode + '.png')
 
         if not os.path.isfile(path):
-            rh = Robohash(code)
+            rh = Robohash(kode)
             rh.assemble(roboset='set4')
             rh.img.save(path, 'png')
 

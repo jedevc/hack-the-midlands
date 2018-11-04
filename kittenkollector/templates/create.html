@@ -29,7 +29,7 @@
 
     <script>
     function makeKitten() {
-      fetch("/api/codes", {
+      fetch("/api/kodes", {
         method: "post",
         headers: {
           'Accept': 'application/json',
@@ -42,7 +42,7 @@
         })
       }).then((response) => { 
         response.json().then((json) => {
-          window.location = '/kitten?code=' + json.code
+          window.location = '/kitten?kode=' + json.kode
         })
       })
     }

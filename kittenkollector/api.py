@@ -2,42 +2,42 @@ from . import app, get_db
 
 import flask
 
-@app.route('/api/codes', methods = ['POST'])
-def create_code():
+@app.route('/api/kodes', methods = ['POST'])
+def create_kode():
     params = flask.request.get_json()
     db = get_db()
 
     name = params['name']
     location = params['location']
 
-    code = db.create(name, location)
-    image = '/api/images/' + code
+    kode = db.create(name, location)
+    image = '/api/images/' + kode
 
     return flask.jsonify({
-        'code': code,
+        'kode': kode,
         'name': name,
         'image': image
     })
 
-@app.route('/api/codes/<string:code>')
-def get_code(code):
+@app.route('/api/kodes/<string:kode>')
+def get_kode(kode):
     db = get_db()
-    result = db.get(code)
+    result = db.get(kode)
     if result:
         name, location = result
         return flask.jsonify({
-            'code': code,
+            'kode': kode,
             'name': name,
             'location': location,
-            'image': '/api/images/' + code
+            'image': '/api/images/' + kode
         })
     else:
         return flask.jsonify({}), 404
 
-@app.route('/api/images/<string:code>')
-def get_image(code):
+@app.route('/api/images/<string:kode>')
+def get_image(kode):
     db = get_db()
-    result = db.getimage(code)
+    result = db.getimage(kode)
     if result:
         return flask.send_file(result)
     else:
